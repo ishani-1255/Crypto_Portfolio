@@ -100,7 +100,7 @@ useEffect(()=>{
         datasets: [
           {
             label: '# of Votes',
-            data: selected.map((s)=>s.owned * s.owned),
+            data: selected.map((s)=>s.owned * s.current_price),
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
