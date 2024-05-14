@@ -7,4 +7,5 @@ export type Crypto ={
     low_24: number;
     atl: number;
     current_price: number;
+    owned: number;
 };
