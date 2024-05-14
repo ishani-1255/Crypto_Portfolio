@@ -18,6 +18,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import CryptoPortfolio from './components/CryptoPorfolio';
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -127,7 +128,7 @@ const[options , setOptions] = useState<ChartOptions<'line'>>({
      <Line options ={options} data={data} /> 
      </div>
      : null}
-
+     <CryptoPortfolio/>
     </div>
    </>
   );
