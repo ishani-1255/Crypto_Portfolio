@@ -37,7 +37,7 @@ const[range , setRange] = useState<number>(30);
 const [data , setData ] = useState<ChartData<'pie'>>();
 
  useEffect(()=>{
-  const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&x_cg_demo_api_key=$API'
+  const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&x_cg_demo_api_key=${API}'
   axios.get(url)
   .then((response)=>{
     setCryptos(response.data)
