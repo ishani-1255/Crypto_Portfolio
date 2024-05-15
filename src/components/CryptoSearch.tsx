@@ -48,7 +48,7 @@ const[options , setOptions] = useState<ChartOptions<'line'>>({
   },
 });
  useEffect(()=>{
-  const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&x_cg_demo_api_key=$API'
+  const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&x_cg_demo_api_key=${API}'
   axios.get(url)
   .then((response)=>{
     setCryptos(response.data)
@@ -57,7 +57,7 @@ const[options , setOptions] = useState<ChartOptions<'line'>>({
 
  useEffect(()=>{
   if(!selected) return;
-  axios.get(`https://api.coingecko.com/api/v3/coins/${selected?.id}/market_chart?vs_currency=usd&days=${range}&x_cg_demo_api_key=$API`)
+  axios.get(`https://api.coingecko.com/api/v3/coins/${selected?.id}/market_chart?vs_currency=usd&days=${range}&x_cg_demo_api_key=${API}`)
       .then((response)=>{
         setData({
           labels : response.data.prices.map((price:number[])=>{
