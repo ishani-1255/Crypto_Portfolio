@@ -35,19 +35,7 @@ const [ selected , setSelected] = useState <Crypto [] >([]);
 const[range , setRange] = useState<number>(30);
 
 const [data , setData ] = useState<ChartData<'pie'>>();
-/*const[options , setOptions] = useState<ChartOptions<'line'>>({
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' as const,
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Line Chart',
-    },
-  },
-});
-*/
+
  useEffect(()=>{
   const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&x_cg_demo_api_key=CG-PMjkfedn2YGEVVwZqXZN9Lrz'
   axios.get(url)
@@ -55,43 +43,6 @@ const [data , setData ] = useState<ChartData<'pie'>>();
     setCryptos(response.data)
   })
  }, []);
-
- /*useEffect(()=>{
-  if(!selected) return;
-  axios.get(`https://api.coingecko.com/api/v3/coins/${selected?.id}/market_chart?vs_currency=usd&days=${range}&x_cg_demo_api_key=CG-PMjkfedn2YGEVVwZqXZN9Lrz`)
-      .then((response)=>{
-        setData({
-          labels : response.data.prices.map((price:number[])=>{
-            return moment.unix(price[0]/1000).format('MM-DD')
-          }),
-           datasets: [
-            {
-              
-              label: 'Dataset',
-              data: response.data.prices.map((price : number[])=>{return price[1].toFixed(2)}),
-              borderColor: 'rgb(255, 99, 132)',
-              backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-          ],
-        });
-        setOptions({
-          responsive: true,
-           plugins: {
-           legend: {
-            display:false,
-           position: 'top' as const,
-          },
-         title: {
-         display: true,
-         text: `${selected?.name} Price Over Last ` + range + (range == 1 ? ' Day.' : 'Days'),
-        },
-
-        },
-      });
-      });
-
- },[selected,range]);
-*/
 
 useEffect(()=>{
     if(selected.length === 0) return;
@@ -136,13 +87,18 @@ function updateOwned(crypto : Crypto , amount : number): void{
 }
   return (
   <>
-    <div className="App">
+    <div className="min-h-screen bg-gray-100 p-8 flex flex-col items-center ">
+      <div className="max-w-3xl mx-auto mt-4">
+      <h1 className="text-2xl font-bold mb-4">Choose Your Crypto Currency:</h1>
+        <div className="mb-8">
     <select onChange ={(e)=>{
      const c = cryptos?.find((x)=>x.id === e.target.value) as Crypto;
       setSelected([...selected , c]);
       //make a request and update the data variable. since range and selected both changes will add then in a single useEffect.
     }}
-    defaultValue='default'>
+    defaultValue='default'
+    className=" m-2 p-3 block w-[800px] px-4  mt-5 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 appearance-none"
+          >
       <option value ='default'>Choose an option</option>
      {cryptos ?
       cryptos.map((crypto)=>{
@@ -157,7 +113,7 @@ function updateOwned(crypto : Crypto , amount : number): void{
 </div>
 
      {selected.map((s)=> {return <CryptoPage crypto ={s} updateOwned = {updateOwned}/>})}
-     <p>Total Portfolio Worth : </p>
+     <span className="mt-4 ml-6 text-lg font-bold">Total Portfolio Worth : </span>
      {selected
      ? '$ ' + selected.map((c)=>{
         if(isNaN(c.owned)){
@@ -170,12 +126,16 @@ function updateOwned(crypto : Crypto , amount : number): void{
       : null}
 
 {data ? 
-     <div  style = {{ width : 300 }}>
+     <div  className="mt-8 ml-10 mb-[100px] " style = {{ width : 300 }}>
      <Pie data={data} /> 
      </div>
      : null}
 
-
+</div>
+<footer className="bg-gray-200 py-4 text-center fixed bottom-0 left-0 w-full ">
+      <p className="text-sm text-gray-600">© 2024 CryptoPortfolio. All rights reserved.</p>
+    </footer>
+</div>
    
    </>
   );
